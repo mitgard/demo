@@ -3,6 +3,7 @@ package ru.rustam.demo.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import ru.rustam.demo.model.Disc;
+import ru.rustam.demo.model.User;
 
 import java.util.List;
 
@@ -13,4 +14,7 @@ public interface DiscRepository extends JpaRepository<Disc, Long> {
 
     Disc findByName(String name);
 
+    List<Disc> findDiscsByUser_id(User user);
+
+    List<Disc> findDiscsByRenterIs(User user);
 }

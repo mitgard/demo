@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import ru.rustam.demo.model.Disc;
+import ru.rustam.demo.model.User;
 import ru.rustam.demo.repository.DiscRepository;
 
 import java.util.List;
@@ -15,15 +16,29 @@ public class DiscServiceImpl implements DiscService{
     @Autowired
     private DiscRepository discRepository;
 
+    @Override
     public Disc findByName(String name) {
         return discRepository.findByName(name);
     }
 
+    @Override
     public List<Disc> findAll() {
         return discRepository.findAll();
     }
 
+    @Override
     public void save(Disc disc) {
         discRepository.save(disc);
     }
+
+    @Override
+    public List<Disc> findDiscsByUser_id(User user) {
+        return discRepository.findDiscsByUser_id(user);
+    }
+
+    @Override
+    public List<Disc> findDiscByRenterIs(User user) {
+        return discRepository.findDiscsByRenterIs(user);
+    }
+
 }

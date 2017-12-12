@@ -22,16 +22,16 @@ public class UserController {
     @GetMapping(value = "/users", produces = "Application/json")
     public ResponseEntity users() {
         List<User> list = userService.getAll();
+        list.forEach(user -> user.setPassword(null));
         return ResponseEntity.ok(list);
     }
 
     @RequestMapping(value = "/user/add", method = RequestMethod.POST)
-    public ResponseEntity addUser(@RequestBody User user){
+    public ResponseEntity addUser(@RequestBody User user) {
         User userCheck = userService.findUserByUsername(user.getUsername());
-        if(userCheck == null) {
+        if (userCheck == null) {
             userService.saveUser(user);
             return ResponseEntity.ok(user);
-        }
-        else return ResponseEntity.ok("User with this username was already exist.");
+        } else return ResponseEntity.ok("User with this username was already exist.");
     }
 }

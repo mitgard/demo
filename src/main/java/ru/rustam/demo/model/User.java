@@ -1,13 +1,17 @@
 package ru.rustam.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
 @Table(name = "users")
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class User {
 
     @Id
@@ -20,7 +24,6 @@ public class User {
     @Column(name = "password")
     @Length(min = 3, message = "*Your password must have at least 5 characters")
     @NotEmpty(message = "*Please provide your password")
-    @Transient
     private String password;
     @Column(name = "name")
     @NotEmpty(message = "*Please provide your name")
@@ -38,6 +41,17 @@ public class User {
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
+
+    @OneToMany(mappedBy = "user_id")
+    private List<Disc> discs;
+
+    public User(){}
+    public User(String username, String password, String name, String phone){
+        this.username = username;
+        this.password = password;
+        this.name = name;
+        this.phone = phone;
+    }
 
     public int getId() {
         return id;

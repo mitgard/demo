@@ -20,6 +20,13 @@ public class Disc {
     @Column(name = "description")
     private String description;
 
+    @ManyToOne
+    @JoinColumn
+    private User user_id;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinTable(name = "disc_changer", joinColumns = @JoinColumn(name = "disc_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
+    private User renter;
 
     public int getDisc_id() {
         return disc_id;
@@ -51,5 +58,21 @@ public class Disc {
 
     public void setDesc(String desc) {
         this.description = desc;
+    }
+
+    public User getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(User user_id) {
+        this.user_id = user_id;
+    }
+
+    public User getRenter() {
+        return renter;
+    }
+
+    public void setRenter(User renter) {
+        this.renter = renter;
     }
 }
