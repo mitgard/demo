@@ -32,8 +32,8 @@ public class DiscServiceImpl implements DiscService{
     }
 
     @Override
-    public List<Disc> findDiscsByUser_id(User user) {
-        return discRepository.findDiscsByUser_id(user);
+    public List<Disc> findDiscsByOwnerIs(User user) {
+        return discRepository.findDiscsByOwnerIs(user);
     }
 
     @Override

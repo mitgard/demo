@@ -14,7 +14,7 @@ public interface DiscRepository extends JpaRepository<Disc, Long> {
 
     Disc findByName(String name);
 
-    List<Disc> findDiscsByUser_id(User user);
+    List<Disc> findDiscsByOwnerIs(User user);
 
     List<Disc> findDiscsByRenterIs(User user);
 }

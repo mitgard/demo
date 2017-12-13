@@ -10,6 +10,6 @@ public interface DiscService {
     Disc findByName(String name);
     List<Disc> findAll();
     void save(Disc name);
-    List<Disc> findDiscsByUser_id(User user);
+    List<Disc> findDiscsByOwnerIs(User user);
     List<Disc> findDiscByRenterIs(User user);
 }

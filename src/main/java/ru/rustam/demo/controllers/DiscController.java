@@ -44,14 +44,14 @@ public class DiscController {
     @GetMapping(value = "/discs/owner", produces = "Application/json")
     public ResponseEntity discsByOwner(@RequestBody String username) {
         User user = userService.findUserByUsername(username);
-        List<Disc> list = discService.findDiscsByUser_id(user);
+        List<Disc> list = discService.findDiscsByOwnerIs(user);
         return ResponseEntity.ok(hydePwd(list));
     }
 
     @GetMapping(value = "/discs/my", produces = "Application/json")
     public ResponseEntity myDiscs(Principal principal) {
         User user = userService.findUserByUsername(principal.getName());
-        List<Disc> list = discService.findDiscsByUser_id(user);
+        List<Disc> list = discService.findDiscsByOwnerIs(user);
         return ResponseEntity.ok(hydePwd(list));
     }
 
@@ -71,18 +71,16 @@ public class DiscController {
     @GetMapping(value = "/discs/owner/nonfree", produces = "Application/json")
     public ResponseEntity discsNonFree(Principal principal){
         User user = userService.findUserByUsername(principal.getName());
-        List<Disc> list = discService.findDiscsByUser_id(user).stream().filter(disc -> disc.getRenter() != null).collect(Collectors.toList());
+        List<Disc> list = discService.findDiscsByOwnerIs(user).stream().filter(disc -> disc.getRenter() != null).collect(Collectors.toList());
         return ResponseEntity.ok(hydePwd(list));
     }
 
     List<Disc> hydePwd(List<Disc> list){
-//        list.forEach(disc -> {
-//                    disc.setUser_id(new User(disc.getUser_id().getUsername(), null, disc.getUser_id().getName(), disc.getUser_id().getPhone()));
-//                    disc.setRenter(new User(disc.getRenter().getUsername(), null, disc.getRenter().getName(), disc.getRenter().getPhone()));
-//                });
+        list.forEach(disc -> {
+                    disc.setUser_id(new User(disc.getUser_id().getUsername(), null, disc.getUser_id().getName(), disc.getUser_id().getPhone()));
+                    if(disc.getRenter() != null)
+                    disc.setRenter(new User(disc.getRenter().getUsername(), null, disc.getRenter().getName(), disc.getRenter().getPhone()));
+                });
         return list;
     }
 }
-//        - список свободных дисков (у всех пользователей невзятые),
-//        - список дисков, взятых пользователем;
-//        - список дисков, взятых у пользователя (с указанием, кто взял)

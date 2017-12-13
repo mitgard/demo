@@ -21,8 +21,8 @@ public class Disc {
     private String description;
 
     @ManyToOne
-    @JoinColumn
-    private User user_id;
+    @JoinColumn(name = "owner")
+    private User owner;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinTable(name = "disc_changer", joinColumns = @JoinColumn(name = "disc_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
@@ -61,11 +61,11 @@ public class Disc {
     }
 
     public User getUser_id() {
-        return user_id;
+        return owner;
     }
 
-    public void setUser_id(User user_id) {
-        this.user_id = user_id;
+    public void setUser_id(User user) {
+        this.owner = user;
     }
 
     public User getRenter() {
