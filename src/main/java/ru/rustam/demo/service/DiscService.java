@@ -9,7 +9,9 @@ public interface DiscService {
 
     Disc findByName(String name);
     List<Disc> findAll();
-    void save(Disc name);
+    void save(Disc disc);
     List<Disc> findDiscsByOwnerIs(User user);
     List<Disc> findDiscByRenterIs(User user);
+    void updateRenter( int user_id, int disc_id);
+    void deleteRenter(int disc_id);
 }

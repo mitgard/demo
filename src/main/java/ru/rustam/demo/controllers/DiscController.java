@@ -41,6 +41,25 @@ public class DiscController {
         } else return ResponseEntity.ok("Disc with this name was already exist.");
     }
 
+    @RequestMapping(value = "/disc/get", method = RequestMethod.POST)
+    public ResponseEntity getDisc(@RequestBody Disc disc, Principal principal) {
+        Disc discCheck = discService.findByName(disc.getName());
+        if (discCheck.getRenter() == null) {
+            User renter = userService.findUserByUsername(principal.getName());
+            discService.updateRenter(renter.getId(), disc.getDisc_id());
+            return ResponseEntity.ok(disc);
+        } else return ResponseEntity.ok("Disc is not free.");
+    }
+
+    @RequestMapping(value = "/disc/return", method = RequestMethod.POST)
+    public ResponseEntity returnDisc(@RequestBody Disc disc) {
+        Disc discCheck = discService.findByName(disc.getName());
+        if (discCheck.getRenter() != null) {
+            discService.deleteRenter(disc.getDisc_id());
+            return ResponseEntity.ok(disc);
+        } else return ResponseEntity.ok("Disc is not free.");
+    }
+
     @GetMapping(value = "/discs/owner", produces = "Application/json")
     public ResponseEntity discsByOwner(@RequestBody String username) {
         User user = userService.findUserByUsername(username);

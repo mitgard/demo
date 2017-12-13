@@ -31,6 +31,7 @@ public class DiscServiceImpl implements DiscService{
         discRepository.save(disc);
     }
 
+
     @Override
     public List<Disc> findDiscsByOwnerIs(User user) {
         return discRepository.findDiscsByOwnerIs(user);
@@ -40,5 +41,16 @@ public class DiscServiceImpl implements DiscService{
     public List<Disc> findDiscByRenterIs(User user) {
         return discRepository.findDiscsByRenterIs(user);
     }
+
+    @Override
+    public void updateRenter(int user_id, int disc_id) {
+        discRepository.updateRenter(user_id, disc_id);
+    }
+
+    @Override
+    public void deleteRenter(int disc_id) {
+        discRepository.deleteRenter(disc_id);
+    }
+
 
 }

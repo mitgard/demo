@@ -30,8 +30,6 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
                 .passwordEncoder(bCryptPasswordEncoder)
                 .usersByUsernameQuery("SELECT username, password, TRUE FROM users WHERE username=?")
                 .authoritiesByUsernameQuery("SELECT username, role.role FROM users LEFT OUTER JOIN role ON role.role_id = (SELECT role_id FROM user_role WHERE user_role.user_id = (SELECT users.user_id FROM users WHERE username = ?))");
-//        auth.inMemoryAuthentication().withUser("user").password("user").roles("USER");
-//        auth.inMemoryAuthentication().withUser("admin").password("admin").roles("ADMIN");
     }
 
     @Override
@@ -40,6 +38,6 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
         http.authorizeRequests()
                 .antMatchers("/**").access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-                .and().formLogin().defaultSuccessUrl("/", false);
+                .and().formLogin().defaultSuccessUrl("/discs", false);
     }
 }
